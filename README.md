@@ -11,10 +11,9 @@ O laboratório prova que uma simples falha no frontend/backend de um site pode s
 ## 🗂️ Estrutura de Arquivos
 
 * `index.html`: A interface do fórum. Contém o campo de input e a rotina vulnerável que processa e exibe os comentários na tela.
-* `BD.json`: Simula o banco de dados da aplicação carregando comentários inofensivos iniciais.
 * `_.js`: O script malicioso principal (Payload). Quando ativado, orquestra o ataque silencioso no navegador da vítima.
 * `Autorun.jar` e `home.jar`: Arquivos de texto disfarçados de executáveis Java (`.jar`). Simulam os malwares que são baixados no computador da vítima para concluir a cadeia de infecção.
-
+* `(OBS) Banco de dados` : Para simplificar a arquitetura do sistema e focar exclusivamente na demonstração da vulnerabilidade no frontend, os dados não estão sendo gravados em um banco real. Os comentários da sessão são manipulados e salvos diretamente em uma lista (array) dentro do próprio código da página HTML.
 ---
 
 ## 🐛 A Vulnerabilidade
