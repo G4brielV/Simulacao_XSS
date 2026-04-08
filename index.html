@@ -30,32 +30,22 @@
     </div>
 
     <script>
-        // Variável para armazenar os comentários durante a sessão
-        let muralDeComentarios = [];
 
-        // Carrega os dados iniciais do BD.json
-        fetch('BD.json')
-            .then(response => response.json())
-            .then(dados => {
-                muralDeComentarios = dados;
-                renderizarComentarios();
-            })
-            .catch(err => console.error("Erro ao carregar banco:", err));
+        let muralDeComentarios = [
+            { usuario: "Joao Silva", texto: "Ótimo post! Me ajudou muito na faculdade de ADS." },
+            { usuario: "Maria Souza", texto: "Alguém sabe se o Java ainda é usado em 2026?" }
+        ];
 
-        // Função responsável por exibir os comentários (AQUI ESTÁ A FALHA)
         function renderizarComentarios() {
             const container = document.getElementById('container-comentarios');
-            container.innerHTML = ''; // Limpa a tela antes de recriar
+            container.innerHTML = ''; 
 
             muralDeComentarios.forEach(item => {
                 const div = document.createElement('div');
                 div.className = 'comentario';
-                
-                // VULNERABILIDADE: Inserindo texto diretamente no HTML sem sanitizar
                 div.innerHTML = `<span class="user">${item.usuario}:</span> ${item.texto}`;
                 container.appendChild(div);
-
-                // SIMULAÇÃO DO COMPORTAMENTO DO NAVEGADOR:
+  
                 // Força a execução de qualquer tag <script> que tenha sido injetada via innerHTML
                 const scripts = div.getElementsByTagName('script');
                 for (let script of scripts) {
@@ -70,25 +60,20 @@
             });
         }
 
-        // Função ativada pelo botão "Enviar"
         function adicionarComentario() {
             const nome = document.getElementById('nomeUsuario').value;
             const texto = document.getElementById('textoComentario').value;
 
             if(nome && texto) {
-                // Adiciona o novo comentário ao "banco de dados" local
                 muralDeComentarios.push({ usuario: nome, texto: texto });
-                
-                // Limpa os campos
                 document.getElementById('nomeUsuario').value = '';
                 document.getElementById('textoComentario').value = '';
-
-                // Atualiza a tela com o novo comentário (isso vai disparar o XSS se houver payload)
                 renderizarComentarios();
             } else {
                 alert("Preencha os campos!");
             }
         }
+        renderizarComentarios();
     </script>
 </body>
 </html>
